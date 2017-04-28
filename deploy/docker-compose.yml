@@ -1,0 +1,48 @@
+version: '2'
+services:
+
+    web:
+        container_name: yii2-app-advanced
+        image: yii2-app-advanced:latest
+        volumes:
+            - ./data/api/runtime:/var/www/html/api/runtime
+            - ./data/backend/runtime:/var/www/html/backend/runtime
+            - ./data/backend/web/assets:/var/www/html/backend/web/assets
+            - ./data/console/runtime:/var/www/html/console/runtime
+            - ./data/frontend/runtime:/var/www/html/frontend/runtime
+            - ./data/frontend/web/assets:/var/www/html/frontend/web/assets
+            - ./data/frontend/web/uploads:/var/www/html/frontend/web/uploads
+            - ./services/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        links:
+            - db
+        environment:
+            ENABLE_ENV_FILE: 1
+            ENABLE_LOCALCONF: 1
+            API_TOKEN: "47591fb1175145933b20f80d89c9da0381e9339a"
+        expose:
+            - 9000
+
+    nginx:
+        build: ./services/nginx
+        ports:
+            - "80:80"
+        links:
+            - web
+        volumes_from:
+            - web
+
+    db:
+        image: mysql:5.6
+        expose:
+            - "3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: web
+            MYSQL_USER: web
+            MYSQL_PASSWORD: web
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+            - ./services/mysql/mysql.cfg:/etc/mysql/conf.d/mysql.cfg
+        # Autostart at boottime
+        #restart: always
+

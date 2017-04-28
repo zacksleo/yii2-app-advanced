@@ -1,0 +1,52 @@
+{
+  "name": "mops/project",
+  "description": "项目介绍",
+  "type": "project",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "zacksleo",
+      "email": "zacksleo@gmail.com"
+    }
+  ],
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "require": {
+    "zacksleo/yii2-backend": "dev-master",
+    "zacksleo/yii2-metronic": "^2.0",
+    "zacksleo/yii2-gallery": "dev-master",
+    "nemmo/yii2-attachments": "^1.0",
+    "yiisoft/yii2": "^2.0",
+    "zacksleo/yii2-gitlab-error-behavior": "^1.0",
+    "zacksleo/yii2-lookup": "^1.1"
+  },
+  "require-dev": {
+    "yiisoft/yii2-debug": "^2.0",
+    "yiisoft/yii2-gii": "^2.0",
+    "phpunit/phpunit": "^4.4",
+    "squizlabs/php_codesniffer": "^2.8",
+    "phpmd/phpmd": "^2.6"
+  },
+  "config": {
+    "process-timeout": 1800,
+    "vendor-dir": "vendor",
+    "fxp-asset": {
+      "installer-paths": {
+        "npm-asset-library": "vendor/npm",
+        "bower-asset-library": "vendor/bower"
+      }
+    }
+  },
+  "extra": {
+    "asset-vcs-driver-options": {
+      "github-no-api": true
+    },
+    "asset-pattern-skip-version": "(-build|patch)"
+  },
+  "repositories": {
+    "gitlab": {
+      "type": "vcs",
+      "url": "metronic private vcs git path"
+    }
+  }
+}

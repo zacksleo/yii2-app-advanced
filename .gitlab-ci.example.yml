@@ -1,0 +1,143 @@
+image: zacksleo/docker-composer:1.1
+before_script:
+    - 'which ssh-agent || ( apk update && apk add openssh-client)'
+    - apk add rsync
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" > ~/deploy.key
+    - chmod 0600 ~/deploy.key
+    - ssh-add ~/deploy.key
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - export APP_ENV=testing
+stages:
+    - prepare
+    - testing
+    - build
+    - deploy
+variables:
+    COMPOSER_CACHE_DIR: "/cache/composer"
+    DOCKER_DRIVER: overlay
+installing-dependencies:
+    stage: prepare
+    script:
+        - composer install --prefer-dist --optimize-autoloader -n --no-interaction -v --no-suggest
+        - composer dump-autoload --optimize
+    artifacts:
+        name: "vendor"
+        untracked: true
+        expire_in: 60 mins
+        paths:
+            - $CI_PROJECT_DIR/vendor
+    except:
+        - feature-docs
+code-review:
+    stage: testing
+    dependencies:
+        - installing-dependencies
+    script:
+        - php vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
+        - php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,packages/,console/migrations/,common/helpers -w --colors ./
+    except:
+        - feature-docs
+test-image:
+    stage: build
+    image: docker:latest
+    services:
+        - docker:dind
+    dependencies:
+        - installing-dependencies
+    script:
+        - docker login -u username -p password registry.domain.com
+        - docker build -t registry.domain.com/namespace/$CI_PROJECT_NAME:latest .
+        - docker push registry.domain.com/namespace/$CI_PROJECT_NAME:latest
+    only:
+        - develop
+    except:
+        - feature-docs
+staging-image:
+    stage: build
+    image: docker:latest
+    services:
+        - docker:dind
+    dependencies:
+        - installing-dependencies
+    script:
+        - docker login -u username -p password registry.domain.com
+        - docker build -t registry.domain.com/namespace/$CI_PROJECT_NAME:stable .
+        - docker push registry.domain.com/namespace/$CI_PROJECT_NAME:stable
+    only:
+        - master
+    except:
+        - feature-docs
+production-image:
+    stage: build
+    image: docker:latest
+    services:
+        - docker:dind
+    dependencies:
+        - installing-dependencies
+    script:
+        - docker login -u username -p password registry.domain.com
+        - docker build -t registry.domain.com/namespace/$CI_PROJECT_NAME:$CI_COMMIT_TAG .
+        - docker push registry.domain.com/namespace/$CI_PROJECT_NAME:$CI_COMMIT_TAG
+    only:
+        - tags
+    except:
+        - feature-docs
+testing-server:
+    stage: deploy
+    image: alpine
+    variables:
+        DEPLOY_SERVER: "deploy server address"
+    script:
+        - cd deploy
+        - rsync -rtvhze ssh . root@$DEPLOY_SERVER:/dirname/$CI_PROJECT_NAME --stats
+        - CHOWN_DIR="frontend/runtime frontend/web/assets frontend/web/galleries frontend/web/uploads backend/runtime backend/web/assets backend/rbac console/runtime api/runtime"
+        - ssh root@$DEPLOY_SERVER "docker login -u username -p password registry.domain.com"
+        - ssh root@$DEPLOY_SERVER "cd /dirname/$CI_PROJECT_NAME && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d"
+        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME chown www-data:www-data $CHOWN_DIR"
+        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME ./yii migrate/up --interactive=0"
+    only:
+        - develop
+    environment:
+        name: testing
+        url: http://$TEST_SERVER
+staging-server:
+    stage: deploy
+    image: alpine
+    variables:
+        DEPLOY_SERVER: "deploy server address"
+    before_script: []
+    script:
+        - cd deploy
+        - rsync -rtvhze ssh . root@$DEPLOY_SERVER:/dirname/$CI_PROJECT_NAME --stats
+        - CHOWN_DIR="frontend/runtime frontend/web/assets frontend/web/galleries frontend/web/uploads backend/runtime backend/web/assets backend/rbac console/runtime api/runtime"
+        - ssh root@$DEPLOY_SERVER "docker login -u username -p password registry.domain.com"
+        - ssh root@$DEPLOY_SERVER "cd /data/$CI_PROJECT_NAME && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d"
+        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME chown www-data:www-data $CHOWN_DIR"
+        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME ./yii migrate/up --interactive=0"
+    only:
+        - master
+    environment:
+        name: staging
+        url: http://$DEPLOY_SERVER
+production-server:
+    stage: deploy
+    image: alpine
+    variables:
+        DEPLOY_SERVER: "deploy server address"
+    script:
+        - cd deploy
+        - rsync -rtvhze ssh . root@$DEPLOY_SERVER:/dirname/$CI_PROJECT_NAME --stats
+        - CHOWN_DIR="frontend/runtime frontend/web/assets frontend/web/galleries frontend/web/uploads backend/runtime backend/web/assets backend/rbac console/runtime api/runtime"
+        - ssh root@$DEPLOY_SERVER "docker login -u username -p password registry.domain.com"
+        - ssh root@$DEPLOY_SERVER "cd /data/$CI_PROJECT_NAME && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d"
+        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME chown www-data:www-data $CHOWN_DIR"
+        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME ./yii migrate/up --interactive=0"
+    only:
+        - tags
+    when: manual
+    environment:
+        name: production
+        url: http://$DEPLOY_SERVER
+
