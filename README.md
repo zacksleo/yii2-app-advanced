@@ -1,37 +1,37 @@
-# 项目名称
+# Yii 2 Advanced Application Template with GitLab-CI and api module
 
-> 该项目用于快速搭建API服务端及后台框架
+> The project is used to quickly build API server and background framework
 
-> 内置持续集成, 实现了自动化代码审查、composer包依赖自动构建、自动化测试、Docker镜像打包和发布
+> Built-in continuous integration, automated code review, composer package dependent on automatic build, automated testing, Docker image packaging and publishing
 
-## 开始
+## Quick Start
 
-### 创建项目
+### Create Project
 
-#### 方法
+#### Steps
  
-+ 在GitLab上点击创建项目
-+ 在 Import project from 中, 点击 Repo By URL
-+ 输入要导入的地址: `git@github.com:zacksleo/yii2-app-advanced.git`,(将username和password替换为自己的用户名和密码)
-+ 点击创建
++ Click Create Project on GitLab
++ In Import project from, click Repo By URLs
++ Enter the address to import `git@github.com:zacksleo/yii2-app-advanced.git`,(Replace username and password with your own username and password)
++ Click to create
 
 
-### 安装依赖库
+### Install dependency library
 
-  使用 `composer install` 安装所需要的依赖库
+ Use `composer install` to install the dependency libraries you need
   
-### 使用Docker创建运行环境
+### Use Docker to create the runtime environment
 
-  使用 docker-compose 创建运行环境:
+  Use docker-compose to create the runtime environment :
   
   ```
    docker-compose up 
    
   ```
 
-### 修改环境变量
+### Modify the environment variable
 
-  修改 docker-compose.yml中 nginx 和 db 暴露的接口, 如
+  Modify docker-compose.yml in nginx and db exposed interfaces such as
   
   ```
       nginx:
@@ -49,91 +49,82 @@
               - "3306:3306"
   ```
   
-  > 注意, 开发环境中, 可以暴露数据库接口到外网, 如果是正式环境,请关闭端口
+  > Note that the development environment, you can expose the database interface to the external network, if it is a formal environment, please close the port
   
-  修改 service/nginx/nginx.conf 中监听的端口, 使之与docker-compose.yml中的对应: 如`listen 886 ssl;``
+  Modify the port in the service / nginx / nginx.conf list to correspond to the docker-compose.yml: ` listen 886 ssl; `
   
   
-### 数据库迁移
+### Database migration
 
-  迁移数据库
+  Migrate the database
   
   ```
     docker exec -it yii2appadvanced_web_1 ./yii migrate/up
     
   ```
-> `yii2appadvanced_web_1` 是容器的名称
+> `yii2appadvanced_web_1` Is the name of the container
    
-   或者使用
+   Or
    
    ```
     docker-compose run --rm web ./yii migrate/up
    
    ```
-> 如果修改后台管理员账号和密码
+> If you modify the background administrator account and password
 
    ```
-   修改 console\migrations\m170406_084842_create_admin_account.php 中的 `username`和 `password_hash`来修改后台账号密码
+   Modify `username` and `password_hash` in  console\migrations\m170406_084842_create_admin_account.php to change the background account password
+   
    ```
 
-### 编写接口
+### Write the interface
 
-  在api/modules下建立版本号对应的模块, 例如v1, 在controllers 中编写控制器, 提供接口
+  In api/modules under the establishment of the corresponding version of the module, such as v1, controllers in the preparation of controller, providing interface
   
-  如果该接口需要认证, 可以继承 `api\modules\v1\controllers`, 该类中实现接口认证
+  If the interface requires authentication, you can inherit `api \ modules \ v1 \ controllers`, which implements interface authentication
 
-  > api目录为接口目录, modules中以版本号区别各个模块, 如 `v1`,`v2`
+  > Api directory for the interface directory, modules in the version number to distinguish between the various modules, such as
+ `v1`,`v2`
   
-  接口的访问地址为 `/api/v1`, v1 为版本号(模块名称)
+  The access address of the interface is `/api/v1`, v1 is the version number (module name)
   
-### 配置URL
+### Config URL
   
-  RESTful接口需要配置URL, 该文件位置文件位于`api\modules\v1\config.php`中, 一个控制器配置一条数据
+  RESTful Apis need to config URL, which file locate at`api\modules\v1\config.php`, one record for one controller
   
-### 后台
+### Backend
   
-  后台地址为 /admin, 默认的账号为 `admin`, 密码为 `admin`
+  Default backend is  /admin. Default default account is `admin`, use password `admin`
     
   
-### 目录说明
+### Debug interface
   
-  + 如果是多个模块公用的模型, 放在 `common\models` 目录下
-  + 如果仅仅某个模块使用, 放在该模块的`{api/backend/frontend}\models`目录下
+  You can use Postman to debug the interface
   
-  + 表单模型放在 `models\forms` 目录下
-  + 查询模型放在 `models\queries` 目录下
-  + 行为放在 `models\behaviors` 目录下
-  + 帮助类放在 `common\helpers` 目录下
-  + 过滤器: 通用的放在 `common\filters` 目录下, 某个模块的放在 `{api/backend/frontend}\filters`目录下
+### Write the interface documentation
+  
+  Click on the right side of the project `Wiki`, start writing the document, the home page (Home) only write profiles and directories, the specific document written in other files, use markdown format,
 
-### 调试接口
-  
-  可以使用Postman 调试接口
-  
-### 编写接口文档
-  
-  点击项目右侧的`Wiki`, 开始编写文档, 首页(Home)只写简介和目录, 具体文档写在其他文件中, 使用markdown格式,
-  文档编写请参考 **接口编写规范**, 参考示例, 见[RESTful接口规范](https://zacksleo.github.io/2017/03/07/RESTful%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/)
+### Code Review
 
-### 格式检查
-
-  每次代码提交会自动进行PSR-2标准的格式检查, 同时也可以在本地提前进行格式审查
+  Each code submission will automatically perform a PSR-2 standard format check, and can also be formatted locally in advance
   
-  执行以下命令进行本地检查
+  Execute the following command to perform a local check
   
   ```
    php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,packages/,console/migrations/,common/helpers -w --colors ./
    
   ```
   
-### 持续集成 
+### Continuous Integration 
   
   ![](http://ww1.sinaimg.cn/large/675eb504gy1fesezaolfyj20w30axdh2.jpg)
   
-  编写`.gitlab-ci.yml`文件, 配置持续集成, 本例中的持续集成分为以下几个阶段:
-  
-  + 准备: 主要是依赖管理和安装
-  + 测试: 包括代码审查, 单元测试, 功能测试和验收测试 
-  + 构建: 包括Docker镜像的构建, 或者安装包的生成
-  + 部署: 包括实现远程自动部署及更新
+  Modify the file `.gitlab-ci.yml`, Configure continuous integration.
+   The continuous integration in this case is divided into the following stages
+     
+  + Preparation: mainly dependence management and installation
+  + Testing: including code review, unit testing, functional testing and acceptance testing
+  + Build: includes the construction of the Docker image, or the installation of the installation package
+  + Deployment: Includes remote automatic deployment and updates
    
