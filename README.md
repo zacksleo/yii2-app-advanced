@@ -118,7 +118,7 @@
   
 ### Continuous Integration 
   
-  ![](http://ww1.sinaimg.cn/large/675eb504gy1fesezaolfyj20w30axdh2.jpg)
+  ![](http://ww1.sinaimg.cn/large/78a9101fgy1ff8f16ldllj21sm0m4whs.jpg)
   
   Modify the file `.gitlab-ci.yml`, Configure continuous integration.
    The continuous integration in this case is divided into the following stages
