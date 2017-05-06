@@ -81,7 +81,7 @@
 
   In api/modules under the establishment of the corresponding version of the module, such as v1, controllers in the preparation of controller, providing interface
   
-  If the interface requires authentication, you can inherit `api \ modules \ v1 \ controllers`, which implements interface authentication
+  If the interface requires authentication, you can inherit `api\modules\v1\controllers`, which implements interface authentication
 
   > Api directory for the interface directory, modules in the version number to distinguish between the various modules, such as
  `v1`,`v2`
