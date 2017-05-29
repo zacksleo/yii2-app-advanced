@@ -3,18 +3,19 @@ services:
 
     web:
         container_name: yii2-app-advanced
-        image: yii2-app-advanced:latest
+        image: registry.domain.com/namespace/yii2-app-advanced:latest
         volumes:
+            - ./.env:/var/www/html/.env
             - ./data/api/runtime:/var/www/html/api/runtime
+            - ./data/api/web/assets:/var/www/html/api/web/assets
             - ./data/backend/runtime:/var/www/html/backend/runtime
             - ./data/backend/web/assets:/var/www/html/backend/web/assets
             - ./data/console/runtime:/var/www/html/console/runtime
             - ./data/frontend/runtime:/var/www/html/frontend/runtime
             - ./data/frontend/web/assets:/var/www/html/frontend/web/assets
             - ./data/frontend/web/uploads:/var/www/html/frontend/web/uploads
-            - ./services/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         links:
-            - db
+            - mysql
         environment:
             ENABLE_ENV_FILE: 1
             ENABLE_LOCALCONF: 1
@@ -25,13 +26,13 @@ services:
     nginx:
         build: ./services/nginx
         ports:
-            - "80:80"
+            - "999:999"
         links:
             - web
         volumes_from:
             - web
 
-    db:
+    mysql:
         image: mysql:5.6
         expose:
             - "3306"
@@ -43,6 +44,3 @@ services:
         volumes:
             - ./data/mysql:/var/lib/mysql
             - ./services/mysql/mysql.cfg:/etc/mysql/conf.d/mysql.cfg
-        # Autostart at boottime
-        #restart: always
-

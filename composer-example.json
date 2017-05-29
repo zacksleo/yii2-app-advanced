@@ -14,18 +14,17 @@
   "require": {
     "zacksleo/yii2-backend": "dev-master",
     "zacksleo/yii2-metronic": "^2.0",
-    "zacksleo/yii2-gallery": "dev-master",
-    "nemmo/yii2-attachments": "^1.0",
     "yiisoft/yii2": "^2.0",
     "zacksleo/yii2-gitlab-error-behavior": "^1.0",
-    "zacksleo/yii2-lookup": "^1.1"
+    "zacksleo/yii2-lookup": "^1.1",
+    "vlucas/phpdotenv": "^2.4"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "^2.0",
     "yiisoft/yii2-gii": "^2.0",
-    "phpunit/phpunit": "^4.4",
     "squizlabs/php_codesniffer": "^2.8",
-    "phpmd/phpmd": "^2.6"
+    "codeception/codeception": "^2.2",
+    "codeception/specify": "*"
   },
   "config": {
     "process-timeout": 1800,

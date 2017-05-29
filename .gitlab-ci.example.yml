@@ -39,6 +39,66 @@ code-review:
         - php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,packages/,console/migrations/,common/helpers -w --colors ./
     except:
         - feature-docs
+        - tags
+unit-test:
+    stage: testing
+    services:
+        - mysql:5.6
+        - redis:latest
+    variables:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: web
+        MYSQL_USER: web
+        MYSQL_PASSWORD: web
+    dependencies:
+        - installing-dependencies
+    coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+    script:
+        - cp tests/.env .env
+        - ./yii migrate/up --interactive=0
+        - php -S localhost:80 --docroot api/tests &>/dev/null&
+        - ./vendor/bin/codecept run unit -c tests --coverage --no-colors
+    artifacts:
+        name: "debug"
+        when: on_failure
+        untracked: true
+        expire_in: 60 mins
+        paths:
+            - rm -rf $CI_PROJECT_DIR/vendor
+            - $CI_PROJECT_DIR/api/runtime
+            - $CI_PROJECT_DIR/tests/_output
+    only:
+        - develop
+        - master
+api-test:
+    stage: testing
+    services:
+        - mysql:5.6
+        - redis:latest
+    variables:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: web
+        MYSQL_USER: web
+        MYSQL_PASSWORD: web
+    dependencies:
+        - installing-dependencies
+    script:
+        - cp tests/.env .env
+        - ./yii migrate/up --interactive=0
+        - php -S localhost:80 --docroot api/tests &>/dev/null&
+        - ./vendor/bin/codecept run api -c tests
+    artifacts:
+        name: "debug"
+        when: on_failure
+        untracked: true
+        expire_in: 60 mins
+        paths:
+            - rm -rf $CI_PROJECT_DIR/vendor
+            - $CI_PROJECT_DIR/api/runtime
+            - $CI_PROJECT_DIR/tests/_output
+    only:
+        - develop
+        - master
 test-image:
     stage: build
     image: docker:latest
