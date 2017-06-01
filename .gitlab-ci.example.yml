@@ -28,8 +28,6 @@ installing-dependencies:
         expire_in: 60 mins
         paths:
             - $CI_PROJECT_DIR/vendor
-    except:
-        - feature-docs
 code-review:
     stage: testing
     dependencies:
@@ -38,7 +36,6 @@ code-review:
         - php vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
         - php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,packages/,console/migrations/,common/helpers -w --colors ./
     except:
-        - feature-docs
         - tags
 unit-test:
     stage: testing
@@ -112,8 +109,6 @@ test-image:
         - docker push registry.domain.com/namespace/$CI_PROJECT_NAME:latest
     only:
         - develop
-    except:
-        - feature-docs
 staging-image:
     stage: build
     image: docker:latest
@@ -127,8 +122,6 @@ staging-image:
         - docker push registry.domain.com/namespace/$CI_PROJECT_NAME:stable
     only:
         - master
-    except:
-        - feature-docs
 production-image:
     stage: build
     image: docker:latest
@@ -142,8 +135,6 @@ production-image:
         - docker push registry.domain.com/namespace/$CI_PROJECT_NAME:$CI_COMMIT_TAG
     only:
         - tags
-    except:
-        - feature-docs
 testing-server:
     stage: deploy
     image: alpine
