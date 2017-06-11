@@ -3,7 +3,7 @@ services:
 
     web:
         container_name: yii2-app-advanced
-        image: registry.domain.com/namespace/yii2-app-advanced:latest
+        image: registry.domain.com/namespace/yii2-app-advanced:${TAG}
         volumes:
             - ./.env:/var/www/html/.env
             - ./data/api/runtime:/var/www/html/api/runtime

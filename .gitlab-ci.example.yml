@@ -1,7 +1,5 @@
-image: zacksleo/docker-composer:1.1
+image: zacksleo/docker-composer:develop
 before_script:
-    - 'which ssh-agent || ( apk update && apk add openssh-client)'
-    - apk add rsync
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" > ~/deploy.key
     - chmod 0600 ~/deploy.key
@@ -182,7 +180,7 @@ production-server:
         - rsync -rtvhze ssh . root@$DEPLOY_SERVER:/dirname/$CI_PROJECT_NAME --stats
         - CHOWN_DIR="frontend/runtime frontend/web/assets frontend/web/galleries frontend/web/uploads backend/runtime backend/web/assets backend/rbac console/runtime api/runtime"
         - ssh root@$DEPLOY_SERVER "docker login -u username -p password registry.domain.com"
-        - ssh root@$DEPLOY_SERVER "cd /data/$CI_PROJECT_NAME && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d"
+        - ssh root@$DEPLOY_SERVER "cd /data/$CI_PROJECT_NAME && export TAG=$CI_BUILD_TAG && docker-compose stop && docker-compose rm -f && docker-compose pull && docker-compose up -d"
         - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME chown www-data:www-data $CHOWN_DIR"
         - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME ./yii migrate/up --interactive=0"
     only:
