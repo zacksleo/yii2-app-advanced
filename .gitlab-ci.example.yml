@@ -62,9 +62,6 @@ unit-test:
             - rm -rf $CI_PROJECT_DIR/vendor
             - $CI_PROJECT_DIR/api/runtime
             - $CI_PROJECT_DIR/tests/_output
-    only:
-        - develop
-        - master
 api-test:
     stage: testing
     services:
@@ -91,9 +88,6 @@ api-test:
             - rm -rf $CI_PROJECT_DIR/vendor
             - $CI_PROJECT_DIR/api/runtime
             - $CI_PROJECT_DIR/tests/_output
-    only:
-        - develop
-        - master
 test-image:
     stage: build
     image: docker:latest
