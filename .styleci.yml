@@ -1,1 +1,4 @@
-preset: psr2
+preset:
+finder:
+  exclude:
+    - "tests"
