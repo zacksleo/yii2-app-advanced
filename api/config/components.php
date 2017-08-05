@@ -4,7 +4,7 @@ return [
         'baseUrl' => '/api',
     ],
     'response' => [
-        'format' => \yii\web\Response::FORMAT_JSON
+        'format' => \yii\web\Response::FORMAT_JSON,
     ],
     'errorHandler' => [
         'errorAction' => 'site/error',
