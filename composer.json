@@ -1,5 +1,5 @@
 {
-  "name": "mops/project",
+  "name": "zacksleo/yii2-app-advanced",
   "description": "项目介绍",
   "type": "project",
   "license": "proprietary",
@@ -12,40 +12,37 @@
   "prefer-stable": true,
   "minimum-stability": "dev",
   "require": {
-    "zacksleo/yii2-backend": "dev-master",
     "zacksleo/yii2-metronic": "^2.0",
     "yiisoft/yii2": "^2.0",
     "zacksleo/yii2-gitlab-error-behavior": "^1.0",
     "zacksleo/yii2-lookup": "^1.1",
-    "vlucas/phpdotenv": "^2.4"
-  },
-  "require-dev": {
+    "vlucas/phpdotenv": "^2.4",
     "yiisoft/yii2-debug": "^2.0",
     "yiisoft/yii2-gii": "^2.0",
-    "squizlabs/php_codesniffer": "^2.8",
+    "zacksleo/yii2-backend": "^1.0",
+    "zacksleo/metronic": "4.7.6"
+  },
+  "require-dev": {
     "codeception/codeception": "^2.2",
-    "codeception/specify": "*"
+    "codeception/specify": "*",
+    "squizlabs/php_codesniffer": "^3.2",
+    "phpmd/phpmd": "^2.6"
   },
   "config": {
     "process-timeout": 1800,
     "vendor-dir": "vendor",
     "fxp-asset": {
-      "installer-paths": {
-        "npm-asset-library": "vendor/npm",
-        "bower-asset-library": "vendor/bower"
-      }
+      "enabled": false
     }
   },
-  "extra": {
-    "asset-vcs-driver-options": {
-      "github-no-api": true
-    },
-    "asset-pattern-skip-version": "(-build|patch)"
-  },
   "repositories": {
-    "gitlab": {
-      "type": "vcs",
-      "url": "metronic private vcs git path"
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    },
+    "asset-packagist": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
     }
   }
 }
