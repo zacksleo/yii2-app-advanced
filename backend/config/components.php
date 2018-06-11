@@ -25,10 +25,6 @@ return [
             'path' => '/admin'
         ]
     ],
-    'cache' => [
-        'class' => 'yii\caching\ApcCache',
-        'useApcu' => true,
-    ],
     'i18n' => [
         'translations' => [
             '*' => [

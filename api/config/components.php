@@ -15,8 +15,4 @@ return [
         'loginUrl' => ['site/login'],
         'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true, 'path' => '/api'],
     ],
-    'cache' => [
-        'class' => 'yii\caching\ApcCache',
-        'useApcu' => true,
-    ],
 ];
