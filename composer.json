@@ -19,8 +19,7 @@
     "vlucas/phpdotenv": "^2.4",
     "yiisoft/yii2-debug": "^2.0",
     "yiisoft/yii2-gii": "^2.0",
-    "zacksleo/yii2-backend": "^1.0",
-    "zacksleo/metronic": "4.7.6"
+    "zacksleo/yii2-backend": "^1.0"
   },
   "require-dev": {
     "codeception/codeception": "^2.2",
