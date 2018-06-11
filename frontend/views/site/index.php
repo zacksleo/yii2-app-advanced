@@ -2,16 +2,16 @@
 
 /* @var $this yii\web\View */
 
-$this->title = '项目名称';
+$this->title = Yii::$app->name;
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>项目名称</h1>
+        <h1><?= Yii::$app->name ?></h1>
 
-        <p class="lead">项目创建成功</p>
+        <p class="lead">Project Created Success</p>
 
-        <p><a class="btn btn-lg btn-success">开始</a></p>
+        <p><a class="btn btn-lg btn-success">Start</a></p>
     </div>
 
     <div class="body-content">

@@ -55,9 +55,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; 联络互动 <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?= Yii::$app->name; ?> <?= date('Y') ?></p>
 
-        <p class="pull-right">Powered by 联络智能</p>
+        <p class="pull-right">Powered by Yii2</p>
     </div>
 </footer>
 
