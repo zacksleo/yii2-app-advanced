@@ -15,5 +15,5 @@ extensions:
 modules:
     config:
         Yii2:
-            configFile: '../common/config/test.php'
+            configFile: '../common/config/test-local.php'
 

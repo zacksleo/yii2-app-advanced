@@ -7,11 +7,11 @@ return yii\helpers\ArrayHelper::merge(
         'components' => [
             'db' => [
                 'class' => 'yii\db\Connection',
-                'dsn' => $_ENV['TEST_DB_DSN'],
-                'username' => $_ENV['TEST_DB_USER'],
-                'password' => $_ENV['TEST_DB_PASSWORD'],
-                'charset' => 'utf8',
-                'tablePrefix' => 'mops_',
+                'dsn' => $_ENV['DB_DSN'],
+                'username' => $_ENV['DB_USER'],
+                'password' => $_ENV['DB_PASSWORD'],
+                'charset' => $_ENV['DB_CHARSET'],
+                'tablePrefix' => $_ENV['DB_PREFIX'],
             ],
         ],
     ]

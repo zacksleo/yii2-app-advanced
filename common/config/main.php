@@ -11,8 +11,8 @@ return [
             'dsn' => $_ENV['DB_DSN'],
             'username' => $_ENV['DB_USER'],
             'password' => $_ENV['DB_PASSWORD'],
-            'charset' => 'utf8',
-            'tablePrefix' => 'mops_',
+            'charset' => $_ENV['DB_CHARSET'],
+            'tablePrefix' => $_ENV['DB_TABLE_PREFIX'],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
