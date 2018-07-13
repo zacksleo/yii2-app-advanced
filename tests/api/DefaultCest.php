@@ -10,7 +10,7 @@ class DefaultCest extends CestBase
     {
         $I->wantTo('API列表');
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendGET('/default/index');
+        $I->sendGET('/');
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
         $I->seeResponseIsJson();
     }
