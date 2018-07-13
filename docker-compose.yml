@@ -39,10 +39,9 @@ services:
             MYSQL_USER: web
             MYSQL_PASSWORD: web
         volumes:
-            - ./services/mysql:/var/lib/mysql
-        restart: always
+            - ./deploy/development/mysql:/var/lib/mysql
+
     redis:
         image: redis:latest
         expose:
             - "6379"
-        restart: always

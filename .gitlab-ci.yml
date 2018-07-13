@@ -204,50 +204,11 @@ production-image:
         - docker rmi $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
     only:
         - tags
-testing-server:
-    stage: deploy
-    variables:
-        DEPLOY_SERVER: "$TESTING_SERVER"
-    dependencies: []
-    cache: {}
-    script:
-        - cd deploy/testing
-        - rsync -rtvhze ssh . root@$DEPLOY_SERVER:/data/$CI_PROJECT_NAME --stats
-        - CHOWN_DIR="frontend/runtime frontend/web/assets frontend/web/uploads backend/runtime backend/web/assets backend/rbac console/runtime api/runtime api/web/assets"
-        - ssh root@$DEPLOY_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
-        - ssh root@$DEPLOY_SERVER "export COMPOSE_HTTP_TIMEOUT=120 && export DOCKER_CLIENT_TIMEOUT=120 && export TAG=$CI_COMMIT_TAG && cd /data/$CI_PROJECT_NAME && docker-compose pull web && docker-compose stop && docker-compose rm -f && docker-compose up -d --build"
-        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME chown www-data:www-data $CHOWN_DIR"
-        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME ./yii migrate/up --interactive=0"
-    only:
-        - develop
-    environment:
-        name: testing
-        url: http://$DEPLOY_SERVER
-    when: manual
-staging-server:
-    stage: deploy
-    variables:
-        DEPLOY_SERVER: "$STAGING_SERVER"
-    dependencies: []
-    cache: {}
-    script:
-        - cd deploy/staging
-        - rsync -rtvhze ssh . root@$DEPLOY_SERVER:/data/$CI_PROJECT_NAME --stats
-        - CHOWN_DIR="frontend/runtime frontend/web/assets frontend/web/uploads backend/runtime backend/web/assets backend/rbac console/runtime api/runtime api/web/assets"
-        - ssh root@$DEPLOY_SERVER "docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY"
-        - ssh root@$DEPLOY_SERVER "export COMPOSE_HTTP_TIMEOUT=120 && export DOCKER_CLIENT_TIMEOUT=120 && export TAG=$CI_COMMIT_TAG && cd /data/$CI_PROJECT_NAME && docker-compose pull web && docker-compose stop && docker-compose rm -f && docker-compose up -d --build"
-        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME chown www-data:www-data $CHOWN_DIR"
-        - ssh root@$DEPLOY_SERVER "docker exec -i $CI_PROJECT_NAME ./yii migrate/up --interactive=0"
-    only:
-        - master
-    environment:
-        name: staging
-        url: http://$DEPLOY_SERVER
 production-server:
     stage: deploy
     image: alpine
     variables:
-        DEPLOY_SERVER: "$STAGING_SERVER"
+        DEPLOY_SERVER: "$PRODUCTION_SERVER"
     dependencies: []
     script:
         - cd deploy/production
