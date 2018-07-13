@@ -62,7 +62,7 @@ phpcs:
         - composer install --prefer-dist --optimize-autoloader -n --no-interaction -v --no-suggest && composer dump-autoload --optimize
         - fi
         - php vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
-        - php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,console/migrations/ -w --colors ./
+        - php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,console/migrations/,tests -w --colors ./
     except:
         - docs
         - develop

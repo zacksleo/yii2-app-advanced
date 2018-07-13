@@ -77,10 +77,14 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username', 'email', 'phone', 'password'], 'required', 'on' => 'signup'],
             ['username', 'match', 'pattern' => '/^[a-z]\w*$/i', 'on' => 'signup'],
-            ['password', 'match', 'pattern' => '/\d/',
-                'message' => '密码至少包含一位数字', 'on' => 'signup'],
-            ['password', 'match', 'pattern' => '/[a-zA-Z]/',
-                'message' => '密码至少包含一个字母', 'on' => 'signup'],
+            [
+                'password', 'match', 'pattern' => '/\d/',
+                'message' => '密码至少包含一位数字', 'on' => 'signup'
+            ],
+            [
+                'password', 'match', 'pattern' => '/[a-zA-Z]/',
+                'message' => '密码至少包含一个字母', 'on' => 'signup'
+            ],
 
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
@@ -100,8 +104,6 @@ class User extends ActiveRecord implements IdentityInterface
             ['phone', 'string', 'max' => 15],
             [['phone'], 'match', 'pattern' => '/^[1][3578][0-9]{9}$/'],
             ['avatar', 'safe'],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg',
-                'maxFiles' => 1, 'maxSize' => 300000],
         ];
     }
 
@@ -123,7 +125,6 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => Yii::t('app', 'status'),
             'create_time' => Yii::t('app', 'create time'),
             'update_time' => Yii::t('app', 'update time'),
-            'imageFile' => '上传头像',
         ];
     }
 
@@ -148,13 +149,6 @@ class User extends ActiveRecord implements IdentityInterface
             $this->setPassword($this->password);
             $this->generateAuthKey();
             $this->generateEmailConfirmationToken();
-        }
-        if (Yii::$app->request->isPost && isset($_POST['User']['imageFile'])) {
-            $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
-            if (!empty($this->imageFile) && !$this->upload()) {
-                $this->addError('avatar', $this->imageFile->getHasError());
-                return false;
-            }
         }
         return parent::beforeSave($insert);
     }
@@ -274,12 +268,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param bool $save whether to save the record. Default is `false`.
      * @return bool|null whether the save was successful or null if $save was false.
      */
-    public function generateEmailConfirmationToken($save = false)
+    public function generateEmailConfirmationToken()
     {
         $this->email_confirmation_token = Yii::$app->security->generateRandomString() . '_' . time();
-        if ($save) {
-            return $this->save();
-        }
     }
 
     /**
@@ -287,12 +278,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param bool $save whether to save the record. Default is `false`.
      * @return bool|null whether the save was successful or null if $save was false.
      */
-    public function generatePasswordResetToken($save = false)
+    public function generatePasswordResetToken()
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-        if ($save) {
-            return $this->save();
-        }
     }
 
     /**
@@ -316,38 +304,5 @@ class User extends ActiveRecord implements IdentityInterface
         $this->email_confirmation_token = null;
         $this->is_email_verified = 1;
         return $this->save();
-    }
-
-    /**
-     * 上传头像
-     * @return bool
-     */
-    public function upload()
-    {
-        if ($this->validate()) {
-            $path = date('Ymd') . '/';
-            $fullpath = \Yii::getAlias('@app') . '/web/uploads/' . $path;
-            if (!file_exists($fullpath)) {
-                mkdir($fullpath);
-            }
-            $filename = uniqid() . '.' . $this->imageFile->extension;
-            $this->imageFile->saveAs($fullpath . $filename);
-            $this->avatar = $path . $filename;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * 获取头像地址
-     * @return string
-     */
-    public function getImageUrl()
-    {
-        if (empty($this->avatar)) {
-            return Url::to('@web/images/avatar.jpg');
-        }
-        return Url::to('@web/uploads/' . $this->avatar, true);
     }
 }

@@ -1,0 +1,17 @@
+<?php
+namespace tests\api;
+
+class DefaultCest extends CestBase
+{
+    /**
+     * @before auth
+     */
+    public function indexTest(\ApiTester $I)
+    {
+        $I->wantTo('API列表');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('/default/index');
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->seeResponseIsJson();
+    }
+}
