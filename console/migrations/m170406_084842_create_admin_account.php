@@ -7,18 +7,19 @@ class m170406_084842_create_admin_account extends Migration
 {
     public function up()
     {
+        $password = Yii::$app->security->generateRandomString(10);
         $this->insert('{{%admin}}', [
             'auth_key' => Yii::$app->security->generateRandomString(),
             'avatar' => '',
             'username' => 'admin',
-            'name' => '管理员',
-            'email' => 'zacksleo@gmail.com',
-            'password_hash' => Yii::$app->security->generatePasswordHash('admin'),
+            'name' => 'Administrator',
+            'email' => 'admin@domain.com',
+            'password_hash' => Yii::$app->security->generatePasswordHash($password),
             'status' => Admin::STATUS_ACTIVE,
             'created_at' => time(),
             'updated_at' => time()
         ]);
-        echo "管理员账号已创建:　admin/admin\n";
+        echo "Account Created:　admin/$password\n";
         return true;
     }
 
@@ -26,7 +27,6 @@ class m170406_084842_create_admin_account extends Migration
     {
         $this->delete('{{%admin}}', [
             'username' => 'admin',
-            'email' => 'zacksleo@gmail.com',
         ]);
         return true;
     }
