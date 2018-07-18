@@ -31,6 +31,6 @@ class m170406_084818_create_admin_menu_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('admin_menu');
+        $this->dropTable('{{%admin_menu}}');
     }
 }
