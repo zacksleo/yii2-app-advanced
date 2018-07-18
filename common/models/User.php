@@ -1,5 +1,5 @@
 <?php
-namespace app\models;
+namespace common\models;
 
 use yii;
 use yii\base\NotSupportedException;
@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
-use app\models\behaviors\TimestampBehavior;
+use yii\behaviors\TimestampBehavior;
 use app\models\queries\UserQuery;
 
 /**
