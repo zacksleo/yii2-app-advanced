@@ -172,7 +172,6 @@ production-image:
         - tags
 production-server:
     stage: deploy
-    image: alpine
     variables:
         DEPLOY_SERVER: "$PRODUCTION_SERVER"
     dependencies: []
