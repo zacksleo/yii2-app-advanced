@@ -29,7 +29,7 @@
 
   ```
       nginx:
-          build: ./services/nginx
+          image: zacksleo/nginx
           ports:
               - "80:80"
           links:
@@ -44,8 +44,6 @@
   ```
 
   > 注意, 开发环境中, 可以暴露数据库接口到外网, 如果是正式环境,请关闭端口
-
-  修改 service/nginx/nginx.conf 中监听的端口, 使之与docker-compose.yml中的对应: 如`listen 886 ssl;``
 
 
 ### 数据库迁移
@@ -99,6 +97,8 @@
   + 行为放在 `models\behaviors` 目录下
   + 帮助类放在 `common\helpers` 目录下
   + 过滤器: 通用的放在 `common\filters` 目录下, 某个模块的放在 `{api/backend/frontend}\filters`目录下
+  + 测试: 所有测试代码放在 `tests` 目录下
+  + 部署: 各个环境的部署脚本放在 `deploy` 目录下
 
 ### 调试接口
 
@@ -120,13 +120,81 @@
 
   ```
 
-### 持续集成
+  ### 单元测试
 
-  ![](http://ww1.sinaimg.cn/large/675eb504gy1fesezaolfyj20w30axdh2.jpg)
+#### 1. 单元测试使用codeception框架进行测试
+
+#### 2. 在`tests/unit`目录下编写单元测试用例
+
+#### 3. 运行测试:
+
++ 首先进入容器 `docker exec -it yii2appadvanced_web_1 /bin/sh`
++ 在项目根目录下, 运行` ./vendor/bin/codecept run unit -c tests` 进行单元测试
+
+### API测试
+
+###  1. API测试使用codeception框架进行测试
+
+#### 2. 在`tests/api` 目录下编写单元测试用例
+
+#### 3. 运行测试:
+
++ 首先进入容器 `docker exec -it yii2appadvanced_web_1 /bin/sh`
++ 启动API服务 `php -S localhost:80 --docroot api/tests &>/dev/null&`
++ 在项目根目录下, 运行`./vendor/bin/codecept run api -c tests`进行API测试
+
+![](http://ww1.sinaimg.cn/large/675eb504gy1ffykpcylkvj20to09vab6.jpg)
 
   编写`.gitlab-ci.yml`文件, 配置持续集成, 本例中的持续集成分为以下几个阶段:
 
-  + 准备: 主要是依赖管理和安装
-  + 测试: 包括代码审查, 单元测试, 功能测试和验收测试
-  + 构建: 包括Docker镜像的构建, 或者安装包的生成
-  + 部署: 包括实现远程自动部署及更新
+### 准备: 主要是依赖管理和安装
+
+  通过定义的`composer.lock`安装项目所需要的依赖包
+
+### 测试: 包括代码审查, 单元测试, API测试
+
+  通过`phpcs` 来进行PSR-2规范的代码审查
+
+### 构建: 包括Docker镜像的构建, 或者安装包的生成
+
+  通过根目录下定义的`Dockerfile`来将整个项目打包成镜像(包含vendor目录), 打包成功后发布到Docker私有库中, 以便下一步的部署
+
+### 部署: 包括实现远程自动部署及更新
+
+  通过在`deploy`目录下`docker-compose.yml`中的编排, 拉取私有库中的镜像, 进行部署
+
+  >注意， deploy 目录中的 docker-compose.yml, 需要修改web镜像
+
+#### 部署流程
+
++ 默认情况下，项目有develop和master两个分支，当代码合并到develop分支时，会自动部署到测试环境；
++ 当合并到master时，会自动部署到预演环境；
++ 打完tag标签, 会自动生成正式环境的镜像，然后在 Piplines 处，点击一下手动部署按钮，会自动部署到正式环境
+
+## 更多
+
+### 自动化
+
+   + [GitLab-CI 持续集成](https://zacksleo.github.io/tags/GitLab-CI/)
+
+### 规范
+
+   + [PHP编码规范](https://zacksleo.github.io/2017/03/07/PHP%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/)
+   + [Git工作流程及使用规范](https://zacksleo.github.io/2017/03/07/Git%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/)
+   + [RESTful接口规范](https://zacksleo.github.io/2017/03/07/RESTful%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/)
+   + [接口文档编写规范](https://apiblueprint.org/)
+   + [中文文案排版指北](https://mazhuang.org/wiki/chinese-copywriting-guidelines/)
+   + [CSS编码规范](https://mops-wiki.lianluo.com/guideline/CSS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83)
+   + [JavaScript编码规范](https://zacksleo.github.io/2017/03/07/JavaScript%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/)
+
+### 相关文档
+
+  + [Yii2官方文档](https://www.yiiframework.com/doc/guide/2.0/zh-cn)
+  + [PHP7官方文档](http://php.net/manual/zh/migration70.new-features.php)
+  + [Composer中文文档](https://docs.phpcomposer.com/)
+  + [Docker官方中文文档](https://docs.docker-cn.com/)
+  + [docker-compose官方文档](https://docs.docker-cn.com/compose/)
+  + [phpunit官方中文文档](https://phpunit.de/manual/current/zh_cn/index.html)
+  + [GitLab-CI官方文档](https://docs.gitlab.com/ee/ci/)
+  + [理解RESTful](http://www.ruanyifeng.com/blog/2011/09/restful.html)
+  + [Codeception官方文档](https://codeception.com/docs/01-Introduction)
