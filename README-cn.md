@@ -184,7 +184,7 @@
    + [RESTful接口规范](https://zacksleo.github.io/2017/03/07/RESTful%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/)
    + [接口文档编写规范](https://apiblueprint.org/)
    + [中文文案排版指北](https://mazhuang.org/wiki/chinese-copywriting-guidelines/)
-   + [CSS编码规范](https://mops-wiki.lianluo.com/guideline/CSS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83)
+   + [CSS编码规范](http://iischajn.github.io/trans/htmlcss-guide/)
    + [JavaScript编码规范](https://zacksleo.github.io/2017/03/07/JavaScript%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/)
 
 ### 相关文档
