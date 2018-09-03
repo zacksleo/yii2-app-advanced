@@ -16,7 +16,7 @@ return [
         'identityClass' => 'zacksleo\yii2\backend\models\Admin',
         'enableAutoLogin' => true,
         'loginUrl' => ['site/login'],
-        'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true, 'path' => '/admin'],
+        'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
     ],
     'session' => [
         // this is the name of the session cookie used for login on the backend
