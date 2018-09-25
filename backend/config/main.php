@@ -16,4 +16,10 @@ return [
     'params' => $params,
     'layout' => 'layout',
     'layoutPath' => '@vendor/zacksleo/yii2-backend/src/views/layouts',
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'admin/*'
+        ]
+    ]
 ];

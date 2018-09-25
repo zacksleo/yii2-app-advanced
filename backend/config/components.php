@@ -53,10 +53,4 @@ return [
     'authManager' => [
         'class' => 'yii\rbac\PhpManager',
     ],
-    'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            'admin/*'
-        ]
-    ]
 ];
