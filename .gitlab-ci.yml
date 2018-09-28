@@ -101,11 +101,15 @@ codequality:
         - develop
         - master
     allow_failure: true
+    when: manual
 unit-test:
     stage: test
     services:
-        - mysql:5.6
-        - redis:alpine
+    - name: mysql:5.6
+      alias: mysql
+      command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-storage-engine=INNODB','--innodb_large_prefix=1','--innodb_file_format=Barracuda']
+    - name: redis:alpine
+      alias: redis
     variables:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: web
@@ -130,8 +134,11 @@ unit-test:
 api-test:
     stage: test
     services:
-        - mysql:5.6
-        - redis:alpine
+    - name: mysql:5.6
+      alias: mysql
+      command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-storage-engine=INNODB','--innodb_large_prefix=1','--innodb_file_format=Barracuda']
+    - name: redis:alpine
+      alias: redis
     variables:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: web
