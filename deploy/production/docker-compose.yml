@@ -9,6 +9,7 @@ services:
             - ./data/api/runtime:/var/www/html/api/runtime
             - ./data/api/web/assets:/var/www/html/api/web/assets
             - ./data/backend/runtime:/var/www/html/backend/runtime
+            - ./data/backend/rbac:/var/www/html/backend/rbac
             - ./data/backend/web/assets:/var/www/html/backend/web/assets
             - ./data/console/runtime:/var/www/html/console/runtime
             - ./data/frontend/runtime:/var/www/html/frontend/runtime
@@ -17,7 +18,6 @@ services:
         environment:
             ENABLE_ENV_FILE: 1
             ENABLE_LOCALCONF: 1
-            API_TOKEN: "47591fb1175145933b20f80d89c9da0381e9339a"
         expose:
             - 9000
         restart: always
