@@ -8,7 +8,7 @@ use yii\web\IdentityInterface;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
 use yii\behaviors\TimestampBehavior;
-use app\models\queries\UserQuery;
+use common\models\queries\UserQuery;
 
 /**
  * User model
