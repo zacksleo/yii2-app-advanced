@@ -1,6 +1,6 @@
 <?php
 return [
-    'id' => 'app-backend-tests',
+    'id' => 'app-api-tests',
     'components' => [
         'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',

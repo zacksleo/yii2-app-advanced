@@ -2,8 +2,8 @@ version: '2'
 services:
 
     web:
-        container_name: yii2-app-advanced
-        image: registry.domain.com/namespace/yii2-app-advanced:${TAG}
+        container_name: ${APP_ID}
+        image: registry.domain.com/namespace/${APP_ID}:${TAG}
         volumes:
             - ./.env:/var/www/html/.env
             - ./data/api/runtime:/var/www/html/api/runtime
@@ -15,9 +15,6 @@ services:
             - ./data/frontend/runtime:/var/www/html/frontend/runtime
             - ./data/frontend/web/assets:/var/www/html/frontend/web/assets
             - ./data/frontend/web/uploads:/var/www/html/frontend/web/uploads
-        environment:
-            ENABLE_ENV_FILE: 1
-            ENABLE_LOCALCONF: 1
         expose:
             - 9000
         restart: always
@@ -31,4 +28,25 @@ services:
         volumes_from:
             - web
         restart: always
+
+    mysql:
+        image: mysql:8.0
+        ports:
+            - "3306:3306"
+        expose:
+            - "3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${APP_ID}
+            MYSQL_USER: ${APP_ID}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - ./deploy/development/mysql:/var/lib/mysql
+        command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+    redis:
+        image: redis:alpine
+        expose:
+            - "6379"
+
 

@@ -11,10 +11,6 @@ services:
         links:
             - mysql
             - redis
-        environment:
-            ENABLE_ENV_FILE: 1
-            ENABLE_LOCALCONF: 1
-            API_TOKEN: "47591fb1175145933b20f80d89c9da0381e9339a"
         expose:
             - 9000
 

@@ -2,13 +2,11 @@
 
 namespace frontend\controllers;
 
-use common\models\UserAuth as Auth;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use app\models\User;
-use zacksleo\yii2\gitlab\behaviors\ErrorBehavior;
+use common\models\User;
 
 class SiteController extends Controller
 {
@@ -34,12 +32,6 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'behaviors' => [
-                'class' => ErrorBehavior::className(),
-                'apiRoot' => 'https://gitlab.com/api/v4/',
-                'privateToken' => 'privateToken',
-                'projectName' => 'zacksleo/yii2-app-advanced'
-            ]
         ];
     }
 

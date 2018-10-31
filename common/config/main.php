@@ -1,6 +1,7 @@
 <?php
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'language' => 'zh-CN',
     'timeZone' => 'Asia/Chongqing',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -32,44 +33,6 @@ return [
             'sizeFormatBase' => '1048576',
             'dateFormat' => 'php:Y-m-d',
             'datetimeFormat' => 'php:Y-m-d H:i:s'
-        ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@vendor/zacksleo/yii2-backend/mail',
-            'useFileTransport' => true,
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => $_ENV['SMTP_HOST'],
-                'username' => $_ENV['SMTP_USER'],
-                'password' => $_ENV['SMTP_PASSWORD'],
-            ],
-        ],
-        'i18n' => [
-            'translations' => [
-                'app/*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en-US',
-                    'fileMap' => [
-                        'user' => 'user.php',
-                        'doctor' => 'doctor.php',
-                        'common' => 'common.php',
-                    ],
-                ],
-                'zacksleo/yii2/backend/*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@vendor/zacksleo/yii2-backend/src/messages',
-                    'sourceLanguage' => 'en-US',
-                    'fileMap' => [
-                        'backend' => 'backend.php',
-                    ],
-                ],
-                'rbac-admin' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'en',
-                    'basePath' => '@mdm/admin/messages',
-                ],
-            ],
         ],
     ],
 ];

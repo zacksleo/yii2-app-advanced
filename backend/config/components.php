@@ -6,7 +6,7 @@ return [
     'request' => [
         'baseUrl' => '/admin',
         'csrfParam' => '_csrf-backend',
-        'cookieValidationKey' => 'SeCrEt_DeV_Key--DO-NOT-USE-IN-PRODUCTION!',
+        'cookieValidationKey' => 'DummyValidationKey',
         'csrfCookie' => [
             'httpOnly' => true,
             'path' => '/admin',
@@ -27,30 +27,44 @@ return [
     ],
     'i18n' => [
         'translations' => [
-            '*' => [
+            'zacksleo/yii2/backend/*' => [
                 'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@backend/messages',
+                'basePath' => '@vendor/zacksleo/yii2-backend/src/messages',
                 'sourceLanguage' => 'en-US',
                 'fileMap' => [
-                    'app' => 'app.php',
-                    'error' => 'error.php',
-                    'login' => 'login.php'
+                    'zacksleo/yii2/backend/backend' => 'backend.php',
                 ],
             ],
+            'extensions/yii2-settings/*' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en-US',
+                'basePath' => '@vendor/pheme/yii2-settings/messages',
+                'fileMap' => [
+                    'extensions/yii2-settings/settings' => 'settings.php',
+                ],
+            ],
+            'rbac-admin' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en',
+                'basePath' => '@mdm/admin/messages',
+            ],
         ],
-    ],
-    'view' => [
-        'theme' => [
-            'pathMap' => [
-                '@app/views' => '@app/themes/metronic/views',
-                '@app/modules' => '@app/themes/metronic/modules',
-            ]
-        ]
     ],
     'settings' => [
         'class' => 'pheme\settings\components\Settings',
     ],
     'authManager' => [
         'class' => 'yii\rbac\PhpManager',
+    ],
+    'mailer' => [
+        'class' => 'yii\swiftmailer\Mailer',
+        'viewPath' => '@vendor/zacksleo/yii2-backend/mail',
+        'useFileTransport' => true,
+        'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => $_ENV['SMTP_HOST'],
+            'username' => $_ENV['SMTP_USER'],
+            'password' => $_ENV['SMTP_PASSWORD'],
+        ],
     ],
 ];

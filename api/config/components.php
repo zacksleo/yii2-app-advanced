@@ -13,6 +13,6 @@ return [
         'identityClass' => 'common\models\User',
         'enableAutoLogin' => true,
         'loginUrl' => ['site/login'],
-        'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true, 'path' => '/api'],
+        'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true, 'path' => '/api'],
     ],
 ];

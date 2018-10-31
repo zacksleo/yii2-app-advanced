@@ -23,7 +23,6 @@ class Module extends BaseModule
     {
         parent::init();
         Yii::$app->response->format = Response::FORMAT_JSON;
-        Yii::$app->response->headers->add('x-author', 'lianluo.com');
         if (YII_DEBUG) {
             Yii::$app->response->headers->add('x-debug-tag', Yii::$app->log->targets['debug']->tag);
         }
