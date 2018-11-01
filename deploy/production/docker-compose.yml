@@ -43,10 +43,10 @@ services:
         volumes:
             - ./deploy/development/mysql:/var/lib/mysql
         command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-
+        restart: always
     redis:
         image: redis:alpine
         expose:
             - "6379"
-
+        restart: always
 
