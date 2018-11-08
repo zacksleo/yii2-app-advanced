@@ -7,7 +7,6 @@ services:
             - ./:/var/www/html/
             - ~/.composer/cache:/root/.composer/cache
             - ~/.ssh:/root/.ssh
-            - ./services/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         links:
             - mysql
             - redis
