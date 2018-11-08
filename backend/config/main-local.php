@@ -3,7 +3,7 @@
 $config = [
     'components' => [
         'request' => [
-            'cookieValidationKey' => 'DummyValidationKey',
+            'cookieValidationKey' => getenv('COOKIE_VALIDATION_KEY')
         ],
     ],
 ];
