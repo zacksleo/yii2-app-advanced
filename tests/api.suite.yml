@@ -8,7 +8,6 @@ modules:
             dsn: mysql:host=mysql;dbname=web
             user: web
             password: web
-            dump: './_data/dump.sql'
             populate: true
             cleanup: false
             reconnect: true
