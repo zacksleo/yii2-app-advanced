@@ -6,7 +6,6 @@ return [
     'request' => [
         'baseUrl' => '/admin',
         'csrfParam' => '_csrf-backend',
-        'cookieValidationKey' => 'DummyValidationKey',
         'csrfCookie' => [
             'httpOnly' => true,
             'path' => '/admin',
