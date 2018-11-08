@@ -1,5 +1,6 @@
 <?php
 return [
+    'name' => getenv('APP_NAME'),
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'language' => 'zh-CN',
     'timeZone' => 'Asia/Chongqing',
