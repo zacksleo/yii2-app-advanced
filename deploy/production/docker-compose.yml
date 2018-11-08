@@ -38,7 +38,7 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_DATABASE: ${APP_ID}
-            MYSQL_USER: ${APP_ID}
+            MYSQL_USER: ${DB_USER}
             MYSQL_PASSWORD: ${DB_PASSWORD}
         volumes:
             - ./deploy/development/mysql:/var/lib/mysql
