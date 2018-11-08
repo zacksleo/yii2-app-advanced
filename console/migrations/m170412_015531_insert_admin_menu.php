@@ -9,7 +9,8 @@ class m170412_015531_insert_admin_menu extends Migration
 {
     public function up()
     {
-        $this->batchInsert('{{%admin_menu}}',
+        $this->batchInsert(
+            '{{%admin_menu}}',
             ['id', 'name', 'parent', 'route', 'order'],
             [
                 [1, '控制台', null, null, 1],
@@ -17,10 +18,9 @@ class m170412_015531_insert_admin_menu extends Migration
                 [3, '用户', 1, null, 9],
                 [4, '管理员', 1, null, 10],
                 [5, '核心组件', 2, null, 1],
-                [6, '对照', 5, '/lookup/default/index', 1],
-                [7, '菜单', 5, '/admin/menu/index', 2],
-                [8, '用户列表', 4, '/admin/user/index', 1],
-                [9, '角色列表', 4, '/admin/role/index', 2],
+                [6, '菜单', 5, '/admin/menu/index', 2],
+                [7, '用户列表', 4, '/admin/user/index', 1],
+                [8, '角色列表', 4, '/admin/role/index', 2],
             ]
         );
         return true;
@@ -29,7 +29,7 @@ class m170412_015531_insert_admin_menu extends Migration
     public function down()
     {
         $this->delete('{{%admin_menu}}', [
-            'between', 'id', 1, 9
+            'between', 'id', 1, 8
         ]);
         return true;
     }

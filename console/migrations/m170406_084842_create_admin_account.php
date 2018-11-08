@@ -13,7 +13,7 @@ class m170406_084842_create_admin_account extends Migration
             'avatar' => '',
             'username' => 'admin',
             'name' => 'Administrator',
-            'email' => 'admin@domain.com',
+            'email' => getenv('ADMIN_EMAIL'),
             'password_hash' => Yii::$app->security->generatePasswordHash($password),
             'status' => Admin::STATUS_ACTIVE,
             'created_at' => time(),

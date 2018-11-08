@@ -12,10 +12,6 @@ class m170406_084804_create_admin_table extends Migration
      */
     public function up()
     {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
-        }
         $this->createTable('{{%admin}}', [
             'id' => $this->primaryKey(),
             'auth_key' => $this->string(125),
@@ -28,7 +24,7 @@ class m170406_084804_create_admin_table extends Migration
             'status' => $this->boolean()->notNull()->defaultValue(1)->comment('状态'),
             'created_at' => $this->integer()->notNull()->comment('创建时间'),
             'updated_at' => $this->integer()->notNull()->comment('更新时间'),
-        ], $tableOptions . ' COMMENT="管理员"');
+        ]);
         return true;
     }
 

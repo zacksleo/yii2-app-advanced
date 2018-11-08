@@ -7,6 +7,8 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use common\models\User;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
 
 class SiteController extends Controller
 {
