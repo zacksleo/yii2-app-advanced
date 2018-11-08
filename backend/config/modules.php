@@ -18,4 +18,19 @@ return [
             //'route' => true
         ]
     ],
+    'backends' => [
+        'class' => 'zacksleo\yii2\backend\Module',
+        'on beforeAction' => function () {
+            Yii::$app->set('user', [
+                'class' => 'yii\web\User',
+                'identityClass' => 'zacksleo\yii2\backend\models\Admin',
+                'enableAutoLogin' => true,
+                'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+                'idParam' => '_identity-backend',
+            ]);
+            if (Yii::$app->user->isGuest && Yii::$app->controller->id != 'api') {
+                return Yii::$app->response->redirect(Yii::$app->user->loginUrl);
+            }
+        }
+    ],
 ];

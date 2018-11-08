@@ -17,7 +17,9 @@ return [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            'admin/*'
+            'admin/*',
+            'site/index',
+            'backends/my/*',
         ]
     ]
 ];
