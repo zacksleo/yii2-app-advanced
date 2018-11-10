@@ -2,3 +2,6 @@
 /vendor
 .DS_Store
 /.vscode
+package.json
+composer.lock
+/node_modules

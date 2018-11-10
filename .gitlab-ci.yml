@@ -106,7 +106,7 @@ codequality:
 unit-test:
     stage: test
     services:
-    - name: mysql:5.6
+    - name: mysql:8
       alias: mysql
       command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
     - name: redis:alpine
@@ -135,7 +135,7 @@ unit-test:
 api-test:
     stage: test
     services:
-    - name: mysql:5.6
+    - name: mysql:8
       alias: mysql
       command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
     - name: redis:alpine
