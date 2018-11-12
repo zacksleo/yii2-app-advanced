@@ -116,6 +116,7 @@ unit-test:
         MYSQL_DATABASE: web
         MYSQL_USER: web
         MYSQL_PASSWORD: web
+        REDIS_PORT: 6379
     dependencies: []
     coverage: '/^\s*Lines:\s*\d+.\d+\%/'
     script:
@@ -145,6 +146,7 @@ api-test:
         MYSQL_DATABASE: web
         MYSQL_USER: web
         MYSQL_PASSWORD: web
+        REDIS_PORT: 6379
     dependencies: []
     script:
         - if [ ! -d "vendor" ]; then
