@@ -25,7 +25,6 @@ build-cache:
       paths:
         - vendor
     except:
-        - docs
         - tags
     when: manual
 build-package:
@@ -45,8 +44,6 @@ build-package:
         expire_in: 60 mins
         paths:
             - vendor
-    except:
-        - docs
     only:
         - tags
 phpcs:
@@ -65,7 +62,6 @@ phpcs:
         - php vendor/bin/phpcs --config-set show_warnings 0
         - php vendor/bin/phpcs --standard=PSR2 --ignore=vendor/,console/migrations/,tests -w --colors ./
     except:
-        - docs
         - develop
         - master
         - tags
@@ -82,7 +78,6 @@ phpmd:
         - fi
         - vendor/bin/phpmd api,backend,common,console,frontend text phpmd.xml --exclude vendor/,console/migrations --suffixes php
     except:
-        - docs
         - develop
         - master
         - tags
@@ -97,7 +92,6 @@ codequality:
          - VOLUME_PATH=/tmp/builds"$(echo $PWD | sed 's|^/[^/]*||')"
          - docker run --env CODECLIMATE_CODE="$VOLUME_PATH" -v /tmp/cc:/tmp/cc -v $VOLUME_PATH:/code -v /var/run/docker.sock:/var/run/docker.sock codeclimate/codeclimate analyze -f text
     except:
-        - docs
         - tags
         - develop
         - master
