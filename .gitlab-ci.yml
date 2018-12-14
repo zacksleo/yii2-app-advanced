@@ -148,7 +148,7 @@ api-test:
         - fi
         - cp tests/.env .env
         - ./yii migrate/up --interactive=0
-        - php -S localhost:80 --docroot api/tests &>/dev/null&
+        - php -S localhost:8080 --docroot api/tests &>/dev/null&
         - ./vendor/bin/codecept run api -c tests
     artifacts:
         name: "debug"

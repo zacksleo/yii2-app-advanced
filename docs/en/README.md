@@ -1,10 +1,3 @@
-# Yii 2 Advanced Application Template with GitLab-CI and api module
-
-[中文文档](README-cn.md)
-
-> The project is used to quickly build API server and background framework
-
-> Built-in continuous integration, automated code review, composer package dependent on automatic build, automated testing, Docker image packaging and publishing
 
 ## Quick Start
 

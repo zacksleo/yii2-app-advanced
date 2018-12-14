@@ -141,7 +141,7 @@
 #### 3. 运行测试:
 
 + 首先进入容器 `docker exec -it yii2appadvanced_web_1 /bin/sh`
-+ 启动API服务 `php -S localhost:80 --docroot api/tests &>/dev/null&`
++ 启动API服务 `php -S localhost:8080 --docroot api/tests &>/dev/null&`
 + 在项目根目录下, 运行`./vendor/bin/codecept run api -c tests`进行API测试
 
 ![](http://ww1.sinaimg.cn/large/675eb504gy1ffykpcylkvj20to09vab6.jpg)
