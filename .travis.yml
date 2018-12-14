@@ -20,9 +20,11 @@ services:
 install:
 - travis_retry composer self-update
 - travis_retry composer install --prefer-dist --no-interaction
+- ls
+- cat .env
+- mv .travis.env .env
 
 before_script:
-- mv .travis.env .env
 - travis_retry mysql -e 'CREATE DATABASE web;'
 - php yii migrate --interactive=0
 - php -S localhost:8080 --docroot api/web &>/dev/null&
