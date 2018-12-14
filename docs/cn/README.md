@@ -106,7 +106,8 @@
 
 ### 编写接口文档
 
-  点击项目右侧的`Wiki`, 开始编写文档, 首页(Home)只写简介和目录, 具体文档写在其他文件中, 使用markdown格式,
+  文档在docs目录中编写，如有多语言支持，按照[语言](https://zh.wikipedia.org/wiki/ISO_639-1%E4%BB%A3%E7%A0%81%E8%A1%A8)+[国家代码](https://zh.wikipedia.org/zh-hans/ISO_3166-1)进行分类
+  如果内容较多，可拆分目录和文件，首页(README.md)只写简介和目录, 具体文档写在其他文件中, 使用markdown格式
   文档编写请参考 **接口编写规范**, 参考示例, 见[RESTful接口规范](https://zacksleo.github.io/2017/03/07/RESTful%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/)
 
 ### 格式检查
