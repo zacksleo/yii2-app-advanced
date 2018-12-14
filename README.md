@@ -7,4 +7,4 @@
 ## Docs
 
 + [Document](./docs/en/README.md)
-+ [中文文档](./docs/ch/README.md)
++ [中文文档](./docs/cn/README.md)
