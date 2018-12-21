@@ -22,6 +22,8 @@ install:
 - travis_retry composer install --prefer-dist --no-interaction
 - cp .travis.env tests/.env
 - mv .travis.env .env
+- mv -f tests/travis.api.suite.yml tests/api.suite.yml
+- mv -f tests/travis.unit.suite.yml tests/unit.suite.yml
 
 before_script:
 - travis_retry mysql -e 'CREATE DATABASE web;'
