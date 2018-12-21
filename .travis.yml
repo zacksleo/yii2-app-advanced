@@ -20,7 +20,7 @@ services:
 install:
 - travis_retry composer self-update
 - travis_retry composer install --prefer-dist --no-interaction
-- cp .travis.env test/.env
+- cp .travis.env tests/.env
 - mv .travis.env .env
 
 before_script:
