@@ -11,7 +11,7 @@ return yii\helpers\ArrayHelper::merge(
                 'username' => $_ENV['DB_USER'],
                 'password' => $_ENV['DB_PASSWORD'],
                 'charset' => $_ENV['DB_CHARSET'],
-                'tablePrefix' => $_ENV['DB_PREFIX'],
+                'tablePrefix' => $_ENV['DB_TABLE_PREFIX'],
             ],
         ],
     ]
