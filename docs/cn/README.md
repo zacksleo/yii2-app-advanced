@@ -22,7 +22,7 @@
 
 ## 修改环境变量
 
-  修改 docker-compose.yml中 nginx 和 mysql 暴露的接口, 如
+  修改 docker-compose.yml 中 nginx 和 mysql 暴露的接口, 如
 
   ```yaml
       nginx:
@@ -68,13 +68,13 @@
 
 > 如何修改后台管理员账号和密码
 
-   ```
+   ```bash
    修改 console\migrations\m170406_084842_create_admin_account.php 中的 `username`和 `password_hash`来修改后台账号密码
    ```
 
 ## 编写接口
 
-  在api/modules下建立版本号对应的模块, 例如v1, 在controllers 中编写控制器, 提供接口
+  在 api/modules 下建立版本号对应的模块, 例如 v1, 在 controllers 中编写控制器, 提供接口
 
   如果该接口需要认证, 可以继承 `api\modules\v1\controllers`, 该类中实现接口认证
 
@@ -84,7 +84,7 @@
 
 ### 配置URL
 
-  RESTful接口需要配置URL, 该文件位置文件位于`api\modules\v1\config.php`中, 一个控制器配置一条数据
+  RESTful接口需要配置URL, 该文件位置文件位于 `api\modules\v1\config.php` 中, 一个控制器配置一条数据
 
 ### 调试接口
 
@@ -103,7 +103,7 @@
 ## 目录说明
 
   + 如果是多个模块公用的模型, 放在 `common\models` 目录下
-  + 如果仅仅某个模块使用, 放在该模块的`{api/backend/frontend}\models`目录下
+  + 如果仅仅某个模块使用, 放在该模块的 `{api/backend/frontend}\models` 目录下
 
   + 表单模型放在 `models\forms` 目录下
   + 查询模型放在 `models\queries` 目录下
@@ -130,7 +130,7 @@
 
 1. 单元测试使用codeception框架进行测试
 
-2. 在`tests/unit`目录下编写单元测试用例
+2. 在 `tests/unit` 目录下编写单元测试用例
 
 3. 运行测试
 
@@ -153,34 +153,34 @@
 
 ## GitLab-CI 配置说明
 
-  编写`.gitlab-ci.yml`文件, 配置持续集成, 本例中的持续集成分为以下几个阶段:
+  编写 `.gitlab-ci.yml` 文件, 配置持续集成, 本例中的持续集成分为以下几个阶段:
 
 ### 准备: 主要是依赖管理和安装
 
-  通过定义的`composer.lock`安装项目所需要的依赖包
+  通过定义的 `composer.lock` 安装项目所需要的依赖包
 
-### 测试: 包括代码审查, 单元测试, API测试
+### 测试: 包括代码审查, 单元测试, API 测试
 
   通过`phpcs` 来进行PSR-2规范的代码审查
 
-### 构建: 包括Docker镜像的构建, 或者安装包的生成
+### 构建: 包括 Docker 镜像的构建, 或者安装包的生成
 
-  通过根目录下定义的`Dockerfile`来将整个项目打包成镜像(包含vendor目录), 打包成功后发布到Docker私有库中, 以便下一步的部署
+  通过根目录下定义的 `Dockerfile` 来将整个项目打包成镜像(包含 vendor 目录), 打包成功后发布到Docker私有库中, 以便下一步的部署
 
 ### 部署: 包括实现远程自动部署及更新
 
-  通过在`deploy`目录下`docker-compose.yml`中的编排, 拉取私有库中的镜像, 进行部署
+  通过在 `deploy` 目录下 `docker-compose.yml` 中的编排, 拉取私有库中的镜像, 进行部署
 
-  >注意， deploy 目录中的 docker-compose.yml, 需要修改web镜像
+  >注意， deploy 目录中的 docker-compose.yml, 需要修改 web 镜像
 
 ## 部署流程
 
-+ 如果只需要正式环境、测试环境和开发环境，则 master对应测试环境，tag对应正式环境
-+ 如果需要增加预演环境，则master对应预演环境，tag对应正式环境，develop对应测试环境
++ 如果只需要正式环境、测试环境和开发环境，则 master 对应测试环境，tag 对应正式环境
++ 如果需要增加预演环境，则 master 对应预演环境，tag 对应正式环境，develop 对应测试环境
 
 + 当代码合并到某个分支时，会自动部署到对应的环境；
-+ 当合并到master时，会自动部署到预演环境；
-+ 打完tag标签, 会自动生成正式环境的镜像，然后在 Piplines 处，点击一下手动部署按钮，会自动部署到正式环境
++ 当合并到 master 时，会自动部署到预演环境；
++ 打完 tag 标签, 会自动生成正式环境的镜像，然后在 Piplines 处，点击一下手动部署按钮，会自动部署到正式环境
 
 ## 更多
 
