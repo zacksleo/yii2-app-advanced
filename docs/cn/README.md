@@ -2,7 +2,7 @@
 
 > 该项目用于快速搭建API服务端及后台框架
 
-> 内置持续集成, 实现了自动化代码审查、composer包依赖自动构建、自动化测试、Docker镜像打包和发布
+> 内置持续集成, 实现了自动化代码审查、composer 包依赖自动构建、自动化测试、Docker 镜像打包和发布
 
 ## 安装开发环境
 
@@ -69,7 +69,7 @@
 > 如何修改后台管理员账号和密码
 
    ```bash
-   修改 console\migrations\m170406_084842_create_admin_account.php 中的 `username`和 `password_hash`来修改后台账号密码
+   修改 console\migrations\m170406_084842_create_admin_account.php 中的 `username` 和 `password_hash` 来修改后台账号密码
    ```
 
 ## 编写接口
@@ -128,7 +128,7 @@
 
 ### 单元测试
 
-1. 单元测试使用codeception框架进行测试
+1. 单元测试使用 codeception 框架进行测试
 
 2. 在 `tests/unit` 目录下编写单元测试用例
 
